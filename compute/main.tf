@@ -32,8 +32,8 @@ resource "aws_autoscaling_group" "web" {
   name                = "web"
   vpc_zone_identifier = tolist(var.public_subnet)
   min_size            = 1
-  max_size            = 3
-  desired_capacity    = 1
+  max_size            = 6
+  desired_capacity    = 4
 
   launch_template {
     id      = aws_launch_template.web.id
