@@ -20,8 +20,9 @@ resource "aws_launch_template" "web" {
   name_prefix            = "web"
   image_id               = data.aws_ami.linux.id
   instance_type          = var.web_instance_type
+  key_name               = var.key_name
   vpc_security_group_ids = [var.web_sg]
-  user_data              = filebase64("install_apache.sh")
+  user_data              = filebase64("install_jenkins.sh")
 
   tags = {
     Name = "web"
@@ -32,8 +33,8 @@ resource "aws_autoscaling_group" "web" {
   name                = "web"
   vpc_zone_identifier = tolist(var.public_subnet)
   min_size            = 1
-  max_size            = 6
-  desired_capacity    = 4
+  max_size            = 3
+  desired_capacity    = 1
 
   launch_template {
     id      = aws_launch_template.web.id
